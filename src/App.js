@@ -6,52 +6,60 @@ class App extends Component {
     super();
   }
 
-  componentDidMount() {
-    const url =
-      'http://api.sl.se/api2/realtimedeparturesv4.jsonp?key=KEY&siteid=9192&timewindow=5';
+  componentDidMount() {}
 
-    // axios
-    //   .get(url, {
-    //     headers: {
-    //       'Access-Control-Allow-Origin': '*',
-    //       'Content-Type': 'application/json'
-    //     }
-    //   })
-    //   .then(data => {
-    //     console.log(data);
-    //   });
+  onClick = () => {
+    fetch('http://localhost:3000/api/v1/timetable/9731/30')
+      .then(data => {
+        if (data.ok) {
+          return data.json();
+        } else {
+          return {
+            fault: 'Unexcpected Error',
+            error: data
+          };
+        }
+      })
+      .then(json => {
+        console.log(json);
+        let timetable, trains, buses, meta;
 
-    // this.fetchAsJSONP(url)
-    //   .then(data => {
-    //     console.log('hio');
-    //     console.log(data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-  }
+        if (json.timetable) {
+          timetable = json.timetable;
+          trains = json.timetable.Trains ? json.timetable.Trains : null;
+          buses = json.timetable.Buses ? json.timetable.Buses : null;
+        }
 
-  fetchAsJSONP = url => {
-    const app = document.querySelector(`#jsonptag`);
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      window.jsoncallback = resolve;
-      script.src = url + '&jsonCallback=jsoncallback';
-      script.onerror = () => reject();
-
-      script.addEventListener('load', () => {
-        app.removeChild(script);
+        this.setState({
+          trains: trains,
+          buses: buses
+        });
       });
-
-      app.appendChild(script);
-    });
   };
 
   render() {
     return (
       <div id="app" className="App">
-        <p>Hello World</p>
-        <div id="jsonptag" />
+        <a href="#" onClick={this.onClick}>
+          Click Me
+        </a>
+        <main className="container">
+          <section className="row trains">
+            <h1 className="title">Pendeltåg</h1>
+            <div className="journey">
+              <p>
+                43 Västerhaninge - 7 min /{' '}
+                <span className="delay">21:06:00</span> 21:06:00
+              </p>
+            </div>
+            <div className="journey">
+              <p>43 Västerhaninge - 8 min</p>
+            </div>
+          </section>
+          <section className="row buses">
+            <h1 className="title">Bussar</h1>
+          </section>
+        </main>
       </div>
     );
   }
