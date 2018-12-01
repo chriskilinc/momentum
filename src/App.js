@@ -12,7 +12,8 @@ class App extends Component {
         message: ''
       },
       trains: null,
-      buses: null
+      buses: null,
+      clientError: null
     };
   }
 
@@ -56,6 +57,11 @@ class App extends Component {
           trains: trains,
           buses: buses
         });
+      })
+      .catch(err => {
+        this.setState({
+          clientError: 'Fetch Error'
+        });
       });
   };
 
@@ -75,6 +81,7 @@ class App extends Component {
               <p className="meta--time">Loading...</p>
             )}
             {this.state.meta.message ? <p>{this.state.meta.message}</p> : null}
+            {this.state.clientError ? <p>{this.state.clientError}</p> : null}
           </section>
           <section className="row trains">
             <h1 className="title">Pendeltåg</h1>
