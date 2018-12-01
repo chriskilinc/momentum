@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './App.css';
+import './Components/Spinner.css';
 import trainIcon from './logo.svg';
 import Departure from './Components/Departure';
 import packagejson from '../package.json';
@@ -22,7 +22,7 @@ class App extends Component {
             ? application.dataset.timespan
             : '30'
         },
-        production: false
+        production: true
       },
       meta: {
         fetched: null,
@@ -60,7 +60,6 @@ class App extends Component {
         }
       })
       .then(json => {
-        console.log(json);
         let timetable, trains, buses, meta;
 
         if (json.meta) {
@@ -111,12 +110,23 @@ class App extends Component {
 
         <main className="container">
           <section className="row meta">
+            <button onClick={this.onClick}>Uppdatera</button>
             {this.state.meta.updatedData ? (
               <p className="meta--time">
                 Uppdaterad: {this.state.meta.updatedData}
               </p>
             ) : (
-              <p className="meta--time">Loading...</p>
+              <div className="meta--time">
+                {this.state.app.production ? (
+                  <div class="lds-facebook">
+                    <div />
+                    <div />
+                    <div />
+                  </div>
+                ) : (
+                  <p>no data</p>
+                )}
+              </div>
             )}
             {this.state.meta.message ? <p>{this.state.meta.message}</p> : null}
             {this.state.clientError ? <p>{this.state.clientError}</p> : null}
@@ -129,7 +139,17 @@ class App extends Component {
                   <Departure key={trainData.JourneyNumber} data={trainData} />
                 ))
               ) : (
-                <p>Loading...</p>
+                <div>
+                  {this.state.app.production ? (
+                    <div class="lds-facebook">
+                      <div />
+                      <div />
+                      <div />
+                    </div>
+                  ) : (
+                    <p>no data</p>
+                  )}
+                </div>
               )}
             </div>
           </section>
@@ -141,10 +161,21 @@ class App extends Component {
                   <Departure key={busesData.JourneyNumber} data={busesData} />
                 ))
               ) : (
-                <p>Loading...</p>
+                <div>
+                  {this.state.app.production ? (
+                    <div class="lds-facebook">
+                      <div />
+                      <div />
+                      <div />
+                    </div>
+                  ) : (
+                    <p>no data</p>
+                  )}
+                </div>
               )}
             </div>
           </section>
+          <footer className="row footer" />
         </main>
       </div>
     );

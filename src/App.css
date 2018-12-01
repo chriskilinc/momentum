@@ -41,12 +41,23 @@
   margin: 0;
 }
 
-.container .row .meta{
-
+.meta{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.meta .meta--time{
+.meta .meta--time p{
   margin: 0;
+}
+
+.meta button{
+  background: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: #fff;
+  border: 3px solid #fff;
 }
 
 .ontime{
