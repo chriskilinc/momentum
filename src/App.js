@@ -21,7 +21,8 @@ class App extends Component {
           timespan: application.dataset.timespan
             ? application.dataset.timespan
             : '30'
-        }
+        },
+        production: false
       },
       meta: {
         fetched: null,
@@ -35,9 +36,14 @@ class App extends Component {
     console.log(this.state.app);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if (this.state.app.production) {
+      console.log('PRODUCTION');
+      this.fetchTimetables();
+    }
+  }
 
-  onClick = () => {
+  fetchTimetables = () => {
     fetch(
       `http://localhost:3000/api/v1/timetable/${
         this.state.app.data.stationId
@@ -87,12 +93,22 @@ class App extends Component {
       });
   };
 
+  onClick = () => {
+    this.fetchTimetables();
+  };
+
   render() {
     return (
       <div id="app" className="App">
-        <a href="#" onClick={this.onClick}>
-          Click Me
-        </a>
+        {this.state.app.production ? null : (
+          <section className="debugger">
+            <p>DEBUG MODE</p>
+            <a href="#" onClick={this.onClick}>
+              Fetch Timetables
+            </a>
+          </section>
+        )}
+
         <main className="container">
           <section className="row meta">
             {this.state.meta.updatedData ? (
