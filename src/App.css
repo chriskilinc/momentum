@@ -1,15 +1,81 @@
+#app{
+  /* CSS in #app is mostly for testing purposes */
+  background: linear-gradient(to bottom, #ef7d00, #ffa33e);
+  min-height: 1000px;
+  padding: 20px 20px;
+}
 .container{
   display: flex;
   flex-direction: column;
-  border: 2px solid hsl(0, 0%, 90%);
+  color:#fff;
+  border: 4px solid #fff;
+  padding: 10px 20px;
+  font-family: 'Nunito', sans-serif;
 }
 .container .row{
-  padding: 10px 5px;
+  padding: 7.5px 5px;
 }
 .container .row .title {
   font-size: 22px;
 }
+
+.container .row .meta{
+
+}
+
+.ontime{
+  color:#fff;
+}
+
+.delayed{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .delay{
   color:red;
   text-decoration: line-through;
+  padding-right: 5px; 
+}
+.deviation{
+  display: inline-block;
+  font-size: 14px;
+  margin-right: 40px;
+  width: 400px;
+}
+
+.departures{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+  color:#fff;
+}
+.departure{
+  border: 3px solid #fff;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 5px 0;
+}
+
+.departure--container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.line-number{
+  border:2px solid #fff;
+  vertical-align: baseline;
+  padding: 2px 10px;
+  margin-right: 20px;
+  background: #ec619f;
+}
+.line-icon{
+  width: auto;
+  height: 30px;
+  vertical-align: middle;
+  padding-bottom: 1px;
 }

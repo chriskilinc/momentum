@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
+import trainIcon from './logo.svg';
 class App extends Component {
   constructor() {
     super();
@@ -44,16 +45,61 @@ class App extends Component {
           Click Me
         </a>
         <main className="container">
+          <section className="row meta">
+            <p>Uppdaterad: 14:32</p>
+          </section>
           <section className="row trains">
             <h1 className="title">Pendeltåg</h1>
-            <div className="journey">
-              <p>
-                43 Västerhaninge - 7 min /{' '}
-                <span className="delay">21:06:00</span> 21:06:00
-              </p>
+            <div className="departures">
+              <div className="departure">
+                <div className="departure--container">
+                  <p>
+                    <span className="line-number">
+                      <img className="line-icon" src={trainIcon} />
+                      43
+                    </span>
+                    Västerhaninge
+                  </p>
+                  <div className="departure--time">
+                    {false ? (
+                      <p>8min</p>
+                    ) : (
+                      <p className="delayed">
+                        <span className="deviation">
+                          Delayed because of delayes Delayed because of delayes
+                          Delayed because
+                        </span>
+                        <span className="delay">8min</span> 12min
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="journey">
-              <p>43 Västerhaninge - 8 min</p>
+
+            <div className="departure">
+              <div className="departure--container">
+                <p>
+                  <span className="line-number">
+                    <img className="line-icon" src={trainIcon} />
+                    43
+                  </span>
+                  Västerhaninge
+                </p>
+                <div className="departure--time">
+                  {false ? (
+                    <p>8min</p>
+                  ) : (
+                    <p className="delayed">
+                      <span className="deviation">
+                        Delayed because of delayes Delayed because of delayes
+                        Delayed because
+                      </span>
+                      <span className="delay">8min</span> 12min
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
           </section>
           <section className="row buses">
