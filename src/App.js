@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 import trainIcon from './logo.svg';
+import Departure from './Components/Departure';
 class App extends Component {
   constructor() {
     super();
+    this.state = {
+      meta: {
+        fetched: null,
+        message: ''
+      },
+      trains: null,
+      buses: null
+    };
   }
 
   componentDidMount() {}
@@ -25,6 +34,17 @@ class App extends Component {
         console.log(json);
         let timetable, trains, buses, meta;
 
+        if (json.meta) {
+          if (json.meta.updatedData) {
+            json.meta = {
+              updatedData: new Date(json.meta.updatedData)
+                .toTimeString()
+                .substring(0, 8)
+            };
+          }
+          meta = json.meta;
+        }
+
         if (json.timetable) {
           timetable = json.timetable;
           trains = json.timetable.Trains ? json.timetable.Trains : null;
@@ -32,6 +52,7 @@ class App extends Component {
         }
 
         this.setState({
+          meta: meta,
           trains: trains,
           buses: buses
         });
@@ -46,64 +67,38 @@ class App extends Component {
         </a>
         <main className="container">
           <section className="row meta">
-            <p>Uppdaterad: 14:32</p>
+            {this.state.meta.updatedData ? (
+              <p className="meta--time">
+                Uppdaterad: {this.state.meta.updatedData}
+              </p>
+            ) : (
+              <p className="meta--time">Loading...</p>
+            )}
+            {this.state.meta.message ? <p>{this.state.meta.message}</p> : null}
           </section>
           <section className="row trains">
             <h1 className="title">Pendeltåg</h1>
             <div className="departures">
-              <div className="departure">
-                <div className="departure--container">
-                  <p>
-                    <span className="line-number">
-                      <img className="line-icon" src={trainIcon} />
-                      43
-                    </span>
-                    Västerhaninge
-                  </p>
-                  <div className="departure--time">
-                    {false ? (
-                      <p>8min</p>
-                    ) : (
-                      <p className="delayed">
-                        <span className="deviation">
-                          Delayed because of delayes Delayed because of delayes
-                          Delayed because
-                        </span>
-                        <span className="delay">8min</span> 12min
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="departure">
-              <div className="departure--container">
-                <p>
-                  <span className="line-number">
-                    <img className="line-icon" src={trainIcon} />
-                    43
-                  </span>
-                  Västerhaninge
-                </p>
-                <div className="departure--time">
-                  {false ? (
-                    <p>8min</p>
-                  ) : (
-                    <p className="delayed">
-                      <span className="deviation">
-                        Delayed because of delayes Delayed because of delayes
-                        Delayed because
-                      </span>
-                      <span className="delay">8min</span> 12min
-                    </p>
-                  )}
-                </div>
-              </div>
+              {this.state.trains && this.state.trains.length > 0 ? (
+                this.state.trains.map(trainData => (
+                  <Departure key={trainData.JourneyNumber} data={trainData} />
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
             </div>
           </section>
           <section className="row buses">
             <h1 className="title">Bussar</h1>
+            <div className="departures">
+              {this.state.buses && this.state.buses.length > 0 ? (
+                this.state.buses.map(busesData => (
+                  <Departure key={busesData.JourneyNumber} data={busesData} />
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
           </section>
         </main>
       </div>
