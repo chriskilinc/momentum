@@ -3,10 +3,26 @@ import axios from 'axios';
 import './App.css';
 import trainIcon from './logo.svg';
 import Departure from './Components/Departure';
+import packagejson from '../package.json';
 class App extends Component {
   constructor() {
     super();
+    const application = document.getElementById('momentum');
+
     this.state = {
+      app: {
+        name: packagejson.name,
+        version: packagejson.version,
+        author: packagejson.author,
+        data: {
+          stationId: application.dataset.station
+            ? application.dataset.station
+            : '9731',
+          timespan: application.dataset.timespan
+            ? application.dataset.timespan
+            : '30'
+        }
+      },
       meta: {
         fetched: null,
         message: ''
@@ -15,12 +31,18 @@ class App extends Component {
       buses: null,
       clientError: null
     };
+
+    console.log(this.state.app);
   }
 
   componentDidMount() {}
 
   onClick = () => {
-    fetch('http://localhost:3000/api/v1/timetable/9731/30')
+    fetch(
+      `http://localhost:3000/api/v1/timetable/${
+        this.state.app.data.stationId
+      }/${this.state.app.data.timespan}`
+    )
       .then(data => {
         if (data.ok) {
           return data.json();

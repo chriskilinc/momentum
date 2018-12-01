@@ -2,6 +2,12 @@
   "name": "momentum",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Christopher Kilinc",
+    "email": "chriskilinc@gmail.com",
+    "url": "https://chriskilinc.com"
+  },
+  "homepage": "https://github.com/chriskilinc/momentum",
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.6.3",
