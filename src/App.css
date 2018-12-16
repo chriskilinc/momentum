@@ -1,8 +1,10 @@
+body{
+  background: linear-gradient(to bottom, #ffa33e, #ffa33e);
+
+}
 #app{
   /* CSS in #app is mostly for testing purposes */
-  background: linear-gradient(to bottom, #ef7d00, #ffa33e);
   min-height: 1000px;
-  padding: 20px 20px;
 }
 .debugger{
   display: flex;
@@ -79,7 +81,6 @@
   display: inline-block;
   font-size: 14px;
   margin-right: 40px;
-  width: 400px;
 }
 
 .departures{
@@ -94,6 +95,13 @@
   font-weight: bold;
   font-size: 24px;
   margin: 5px 0;
+}
+
+.departure .expected-time{
+  padding-right: 10px;
+  font-weight: normal;
+  font-size: 18px;
+  align-self: center;
 }
 
 .departure--container{

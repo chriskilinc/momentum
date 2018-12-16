@@ -22,7 +22,7 @@ class App extends Component {
             ? application.dataset.timespan
             : '30'
         },
-        production: true
+        production: false
       },
       meta: {
         fetched: null,
@@ -45,7 +45,7 @@ class App extends Component {
 
   fetchTimetables = () => {
     fetch(
-      `http://localhost:3000/api/v1/timetable/${
+      `https://momentum-api-chriskilinc.herokuapp.com/api/v1/timetable/${
         this.state.app.data.stationId
       }/${this.state.app.data.timespan}`
     )
@@ -118,7 +118,7 @@ class App extends Component {
             ) : (
               <div className="meta--time">
                 {this.state.app.production ? (
-                  <div class="lds-facebook">
+                  <div className="lds-facebook">
                     <div />
                     <div />
                     <div />
@@ -141,7 +141,7 @@ class App extends Component {
               ) : (
                 <div>
                   {this.state.app.production ? (
-                    <div class="lds-facebook">
+                    <div className="lds-facebook">
                       <div />
                       <div />
                       <div />
@@ -163,7 +163,7 @@ class App extends Component {
               ) : (
                 <div>
                   {this.state.app.production ? (
-                    <div class="lds-facebook">
+                    <div className="lds-facebook">
                       <div />
                       <div />
                       <div />

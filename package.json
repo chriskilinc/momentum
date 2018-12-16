@@ -1,6 +1,6 @@
 {
   "name": "momentum",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "author": {
     "name": "Christopher Kilinc",
@@ -10,6 +10,7 @@
   "repository": {
     "url": "https://github.com/chriskilinc/momentum"
   },
+  "homepage": "https://tvostra.se/touch/momentum/",
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

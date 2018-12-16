@@ -5,9 +5,20 @@ class Departure extends Component {
     super(props);
   }
 
-  componentDidMount() {}
+  normalizeDates = () => {
+    this.props.data.ExpectedDateTime = this.shortenDate(
+      this.props.data.ExpectedDateTime,
+      5
+    );
+  };
+
+  shortenDate = (date, amount) => {
+    return new Date(date).toTimeString().substring(0, amount);
+  };
 
   render() {
+    this.normalizeDates();
+
     if (this.props.data) {
       return (
         <div className="departure">
@@ -30,6 +41,9 @@ class Departure extends Component {
                     {this.props.data.Deviations
                       ? this.props.data.Deviations
                       : ''}
+                  </span>
+                  <span className="expected-time">
+                    {this.props.data.ExpectedDateTime + ' /'}
                   </span>
                   {this.props.data.DisplayTime
                     ? this.props.data.DisplayTime
