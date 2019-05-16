@@ -45,7 +45,7 @@ class App extends Component {
 
   fetchTimetables = () => {
     fetch(
-      `https://momentum-api-chriskilinc.herokuapp.com/api/v1/timetable/${
+      `https://momentum-api.azurewebsites.net/api/v1/timetable/${
         this.state.app.data.stationId
       }/${this.state.app.data.timespan}`
     )
