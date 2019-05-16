@@ -22,7 +22,7 @@ class App extends Component {
             ? application.dataset.timespan
             : '30'
         },
-        production: false
+        production: true
       },
       meta: {
         fetched: null,
