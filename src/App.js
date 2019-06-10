@@ -22,7 +22,7 @@ class App extends Component {
             ? application.dataset.timespan
             : '30'
         },
-        production: true
+        production: this.isProduction(),
       },
       meta: {
         fetched: null,
@@ -30,7 +30,8 @@ class App extends Component {
       },
       trains: null,
       buses: null,
-      clientError: null
+      clientError: null,
+      fetches: 0,
     };
 
     console.log(this.state.app);
@@ -38,14 +39,15 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.app.production) {
-      console.log('PRODUCTION');
       this.fetchTimetables();
+    } else {
+      console.log('Momentum Developement mode');
     }
   }
 
-  fetchTimetables = () => {
+  fetchTimetables = (apiUrl = "https://momentum-api.azurewebsites.net") => {
     fetch(
-      `https://momentum-api.azurewebsites.net/api/v1/timetable/${
+      `${apiUrl}/api/v1/timetable/${
         this.state.app.data.stationId
       }/${this.state.app.data.timespan}`
     )
@@ -86,15 +88,34 @@ class App extends Component {
         });
       })
       .catch(err => {
-        this.setState({
-          clientError: 'Fetch Error'
-        });
+        const currentFetch = this.state.fetches;
+        
+        if (currentFetch < 4) {
+          this.setState({
+            fetches: currentFetch + 1,
+          });
+          setTimeout(this.fetchTimetables, 5000);
+        } else {
+          this.setState({
+            clientError: 'Unable to connect to the server',
+          });  
+          console.log(`Current Api Fetch: ${this.state.fetches}, Ending retry`)
+          this.setState({
+            fetches: 0,
+          });
+        }
+        console.log(`Current Api Fetch: ${this.state.fetches}`)
+        console.log(err);
       });
   };
 
   onClick = () => {
     this.fetchTimetables();
   };
+
+  isProduction = () => {
+    return window.location.href.indexOf("localhost") > -1 ? false : true;
+  }
 
   render() {
     return (
